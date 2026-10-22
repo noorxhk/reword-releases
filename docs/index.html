@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icon.png">
+<title>Install Reword</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column, each step a numbered row with a small mock of the macOS screen it happens on. */
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --sunk: #eceef6;
+  --fg: #171a2b;
+  --muted: #5d6280;
+  --line: #dde0ec;
+  --accent: #5b5bf0;
+  --accent-ink: #ffffff;
+  --accent-soft: #e7e7fd;
+  --ok: #2fb35a;
+  --term-bg: #15172a;
+  --term-fg: #e6e8f5;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1120; --surface: #181b2e; --sunk: #21253c; --fg: #eceefa; --muted: #a2a7c4; --line: #2c3150;
+    --accent: #8b8bff; --accent-ink: #0f1120; --accent-soft: #262a52; --ok: #4cd27a; --term-bg: #0a0b16; --term-fg: #e6e8f5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1120; --surface: #181b2e; --sunk: #21253c; --fg: #eceefa; --muted: #a2a7c4; --line: #2c3150;
+  --accent: #8b8bff; --accent-ink: #0f1120; --accent-soft: #262a52; --ok: #4cd27a; --term-bg: #0a0b16; --term-fg: #e6e8f5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+.wrap { max-width: 720px; margin: 0 auto; padding-block: 48px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 40px; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 6vw, 2.75rem); letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; letter-spacing: -0.01em; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; }
+kbd { font: 500 0.85em var(--mono); background: var(--sunk); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; }
+.label { font: 600 0.75rem var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+header { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+header img { width: 88px; height: 88px; }
+header .lede { color: var(--muted); margin-top: 6px; max-width: 52ch; }
+.needs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.needs span { font-size: 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.path { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.path.fast { border-color: var(--accent); }
+.path p { color: var(--muted); font-size: 0.95rem; }
+.term { background: var(--term-bg); color: var(--term-fg); border-radius: 10px; padding: 12px 14px; font: 0.8rem/1.5 var(--mono); overflow-x: auto; white-space: nowrap; }
+.term::before { content: "$ "; opacity: 0.5; }
+.btn { appearance: none; border: 0; cursor: pointer; font: 600 0.95rem var(--body); background: var(--accent); color: var(--accent-ink); border-radius: 9px; padding: 9px 16px; text-decoration: none; display: inline-flex; justify-self: start; align-items: center; gap: 8px; }
+.btn.ghost { background: var(--accent-soft); color: var(--fg); }
+
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; counter-reset: step; }
+.step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; counter-increment: step; }
+.step::before { content: counter(step); font: 700 1.1rem var(--display); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+.step > div { display: grid; gap: 10px; min-width: 0; }
+.step p { color: var(--muted); }
+.step p strong { color: var(--fg); font-weight: 600; }
+.skip { font-size: 0.8rem; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 10px; margin-left: 8px; vertical-align: 2px; white-space: nowrap; }
+
+/* Small stand-ins for the macOS screens each step happens on. */
+.mock { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-size: 0.9rem; overflow-x: auto; }
+.mock .bar { display: flex; gap: 6px; margin-bottom: 14px; }
+.mock .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.dmg { display: flex; align-items: center; justify-content: space-around; gap: 12px; padding: 8px 0; }
+.dmg figure { margin: 0; display: grid; justify-items: center; gap: 6px; font-size: 0.85rem; }
+.dmg img, .folder { width: 64px; height: 64px; }
+.folder { border-radius: 10px; background: linear-gradient(var(--accent-soft), var(--accent-soft)) ; border: 2px solid var(--accent); display: grid; place-items: center; font: 700 1.6rem var(--display); color: var(--accent); }
+.arrow { font-size: 1.8rem; color: var(--muted); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.row:first-of-type { border-top: 0; }
+.row small { color: var(--muted); display: block; }
+.fakebtn { border: 1px solid var(--line); border-radius: 7px; padding: 3px 12px; background: var(--sunk); white-space: nowrap; }
+.fakebtn.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.toggle { width: 38px; height: 22px; border-radius: 999px; background: var(--ok); position: relative; flex: none; }
+.toggle::after { content: ""; position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; }
+.app { display: flex; align-items: center; gap: 10px; }
+.app img { width: 24px; height: 24px; }
+
+.keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.key { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--surface); display: grid; gap: 4px; text-decoration: none; color: var(--fg); min-width: 0; }
+.key:hover { border-color: var(--accent); }
+.key b { font-family: var(--display); }
+.key span { color: var(--muted); font-size: 0.85rem; }
+
+.try { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 12px; }
+.try dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; }
+.try dt { white-space: nowrap; }
+.try dd { margin: 0; color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+td { padding: 10px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+td:first-child { font-weight: 600; width: 38%; }
+.tablewrap { overflow-x: auto; }
+footer { color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 560px) {
+  .paths, .keys { grid-template-columns: 1fr; }
+  header { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 1fr; gap: 8px; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="Reword app icon">
+    <div>
+      <h1>Install Reword</h1>
+      <p class="lede">Hold <kbd>fn</kbd> to dictate in English, Urdu or Hindi. Select text and press <kbd>⌥2</kbd> to rewrite it. Setup takes about five minutes.</p>
+      <div class="needs"><span>macOS 26 or later</span><span>Apple silicon (M1 or newer)</span><span>Free</span></div>
+    </div>
+  </header>
+
+  <section class="paths" aria-label="Choose how to install">
+    <div class="path fast">
+      <span class="label">Fastest · Terminal</span>
+      <h3>One line</h3>
+      <p>Open <strong>Terminal</strong>, paste this and press Return. It installs the latest version and opens it. Then jump to step 4.</p>
+      <div class="term" id="cmd">curl -fsSL https://raw.githubusercontent.com/noorxhk/reword-releases/main/install.sh | bash</div>
+      <button class="btn" id="copy" type="button">Copy command</button>
+    </div>
+    <div class="path">
+      <span class="label">Download</span>
+      <h3>The DMG</h3>
+      <p>Prefer clicking? Download the DMG and start at step 1.</p>
+      <a class="btn ghost" href="https://github.com/noorxhk/reword-releases/releases/latest">Download Reword</a>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:24px">
+    <h2>Step by step</h2>
+    <ol class="steps">
+      <li class="step"><div>
+        <h3>Download the DMG <span class="skip">Terminal: skip</span></h3>
+        <p>Open the <a href="https://github.com/noorxhk/reword-releases/releases/latest">latest release</a> and click <strong>Reword-x.y.z.dmg</strong> under Assets.</p>
+      </div></li>
+
+      <li class="step"><div>
+        <h3>Drag Reword to Applications <span class="skip">Terminal: skip</span></h3>
+        <p>Open the downloaded DMG. Drag the <strong>Reword</strong> icon onto the <strong>Applications</strong> folder, then open Reword from Applications.</p>
+        <div class="mock" aria-hidden="true">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="dmg">
+            <figure><img src="icon.png" alt=""><figcaption>Reword</figcaption></figure>
+            <span class="arrow">→</span>
+            <figure><div class="folder">A</div><figcaption>Applications</figcaption></figure>
+          </div>
+        </div>
+      </div></li>
+
+      <li class="step"><div>
+        <h3>Click “Open Anyway” <span class="skip">Terminal: skip</span></h3>
+        <p>The first time, macOS says Reword can't be opened because it isn't from the App Store. Click <strong>Done</strong>, then go to <strong>System Settings › Privacy &amp; Security</strong>, scroll to the bottom and click <strong>Open Anyway</strong>. Enter your Mac password if asked.</p>
+        <div class="mock" aria-hidden="true">
+          <span class="label">Privacy &amp; Security › Security</span>
+          <div class="row"><span>“Reword” was blocked to protect your Mac.</span><span class="fakebtn hot">Open Anyway</span></div>
+        </div>
+      </div></li>
+
+      <li class="step"><div>
+        <h3>Allow Accessibility and Microphone</h3>
+        <p>Reword asks for <strong>Accessibility</strong> so it can read and replace selected text. Turn on Reword in <strong>System Settings › Privacy &amp; Security › Accessibility</strong>. The first time you hold <kbd>fn</kbd>, allow the <strong>Microphone</strong>.</p>
+        <div class="mock" aria-hidden="true">
+          <span class="label">Privacy &amp; Security › Accessibility</span>
+          <div class="row"><span class="app"><img src="icon.png" alt="">Reword</span><span class="toggle"></span></div>
+        </div>
+      </div></li>
+
+      <li class="step"><div>
+        <h3>Free up the fn key</h3>
+        <p>Out of the box, <kbd>fn</kbd> opens the emoji picker. In <strong>System Settings › Keyboard</strong>, set <strong>Press 🌐 key to</strong> to <strong>Do Nothing</strong>.</p>
+        <div class="mock" aria-hidden="true">
+          <span class="label">Keyboard</span>
+          <div class="row"><span>Press 🌐 key to</span><span class="fakebtn">Do Nothing ⌄</span></div>
+        </div>
+        <p>Then in Reword's <strong>Settings › Voice</strong>, pick the language you speak. Dictation works from here.</p>
+      </div></li>
+
+      <li class="step"><div>
+        <h3>Add a free AI key for rewriting</h3>
+        <p>Rewriting uses your own free key. Pick one service, sign in there and create a key:</p>
+        <div class="keys">
+          <a class="key" href="https://console.groq.com/keys"><b>Groq</b><span>Fastest · the default</span></a>
+          <a class="key" href="https://aistudio.google.com/apikey"><b>Google Gemini</b><span>Strong with Urdu</span></a>
+          <a class="key" href="https://openrouter.ai/keys"><b>OpenRouter</b><span>Many free models</span></a>
+        </div>
+        <p>In Reword, open <strong>Settings › AI</strong>, choose the same service, paste the key and click <strong>Test key</strong>. The key stays in your Mac's Keychain and only goes to that service.</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <section class="try">
+    <h2>Try it</h2>
+    <dl>
+      <dt>Hold <kbd>fn</kbd></dt><dd>Speak, let go, and the text is typed where your cursor is.</dd>
+      <dt>Select text, <kbd>⌥2</kbd></dt><dd>Rephrase, shorten, formalize, fix grammar, translate, and more.</dd>
+      <dt>Select text, <kbd>fn</kbd> + <kbd>⌃</kbd></dt><dd>Say what to change: “make it polite and shorter”.</dd>
+    </dl>
+    <p>Updates come in from the menu bar icon: click <strong>Install update</strong> when it shows up.</p>
+  </section>
+
+  <section style="display:grid;gap:12px">
+    <h2>If something's off</h2>
+    <div class="tablewrap"><table>
+      <tr><td>Shortcuts do nothing</td><td>Check Accessibility in step 4. If Reword is already on, remove it from the list with −, then add it again.</td></tr>
+      <tr><td>fn opens emoji</td><td>Step 5: set “Press 🌐 key to” to Do Nothing.</td></tr>
+      <tr><td>Urdu comes out wrong</td><td>Reword › Settings › Voice › I speak › Urdu + English. It understands English too.</td></tr>
+      <tr><td>“Limit is used up”</td><td>Free keys have limits. Wait a while, or switch service in Settings › AI.</td></tr>
+      <tr><td>Terminal says “needs macOS 26”</td><td>Reword only runs on macOS 26 or later with an Apple silicon Mac.</td></tr>
+    </table></div>
+  </section>
+
+  <footer>Reword is free and has no account or server. Releases: <a href="https://github.com/noorxhk/reword-releases">github.com/noorxhk/reword-releases</a></footer>
+</div>
+
+<script>
+document.getElementById("copy").addEventListener("click", async (e) => {
+  const cmd = document.getElementById("cmd");
+  try {
+    await navigator.clipboard.writeText(cmd.textContent);
+    e.target.textContent = "Copied";
+  } catch {
+    getSelection().selectAllChildren(cmd);
+    e.target.textContent = "Press ⌘C to copy";
+  }
+  setTimeout(() => (e.target.textContent = "Copy command"), 2000);
+});
+</script>
+</body>
+</html>
