@@ -3,222 +3,392 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Reword: dictation for Mac</title>
-<meta name="description" content="Hold fn and speak in English, Urdu or Roman Urdu. Reword types clean, polished text in any Mac app. Free, no account.">
-<meta property="og:title" content="Reword: think in Urdu, send in English">
-<meta property="og:description" content="Hold fn, speak, and clean text appears in any Mac app. Free, no account.">
+<title>Reword: speak messy, send perfect</title>
+<meta name="description" content="Hold fn and talk in English, Urdu or both. Reword types what you meant, cleaned up, in any app on your Mac. Free, no account.">
+<meta property="og:title" content="Reword: speak messy, send perfect">
+<meta property="og:description" content="Hold fn and talk. Reword types what you meant, in any app on your Mac. Free.">
 <meta property="og:image" content="https://noorxhk.github.io/reword-releases/og.jpg">
 <meta property="og:url" content="https://noorxhk.github.io/reword-releases/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#050507">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Nastaliq+Urdu:wght@500&display=swap">
 <style>
-/* Same tokens as install.html, so the landing page and the guide read as one site. */
+/* A dark, cinematic page in the film's colors. The page itself demonstrates the app: messy speech in, clean text out. */
 :root {
-  --bg: #f6f7fb; --surface: #ffffff; --sunk: #eceef6; --fg: #171a2b; --muted: #5d6280; --line: #dde0ec;
-  --accent: #5b5bf0; --accent-ink: #ffffff; --accent-soft: #e7e7fd; --ok: #2fb35a; --bad: #e5484d;
-  --term-bg: #15172a; --term-fg: #e6e8f5; --glow: rgba(91, 91, 240, 0.16);
+  --bg: #050507; --bg2: #0b0c16; --surface: rgba(255,255,255,0.04); --surface2: rgba(255,255,255,0.07);
+  --fg: #f2f2f5; --muted: #9a9cb3; --dim: #5d6078; --line: rgba(255,255,255,0.09);
+  --accent: #8a8eff; --accent2: #c38bff; --red: #ff4d4d; --green: #30d158;
   --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #07080f; --surface: #12142a; --sunk: #1c1f38; --fg: #eceefa; --muted: #a2a7c4; --line: #262a48;
-    --accent: #8a8eff; --accent-ink: #0b0c18; --accent-soft: #23264d; --ok: #4cd27a; --bad: #ff6b6b;
-    --term-bg: #0a0b16; --term-fg: #e6e8f5; --glow: rgba(138, 142, 255, 0.22);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #07080f; --surface: #12142a; --sunk: #1c1f38; --fg: #eceefa; --muted: #a2a7c4; --line: #262a48;
-  --accent: #8a8eff; --accent-ink: #0b0c18; --accent-soft: #23264d; --ok: #4cd27a; --bad: #ff6b6b;
-  --term-bg: #0a0b16; --term-fg: #e6e8f5; --glow: rgba(138, 142, 255, 0.22);
+  --body: "Figtree", -apple-system, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --urdu: "Noto Nastaliq Urdu", "Geeza Pro", serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: clip; }
 a { color: var(--accent); }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
-h1, h2, h3 { font-family: var(--display); line-height: 1.08; text-wrap: balance; margin: 0; }
-h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); letter-spacing: -0.02em; }
-h3 { font-size: 1.15rem; letter-spacing: -0.01em; }
+button { font: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.02; margin: 0; text-wrap: balance; }
 p { margin: 0; }
-kbd { font: 500 0.82em var(--mono); background: var(--sunk); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--fg); }
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.label { font: 600 0.75rem var(--body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
-.accent { color: var(--accent); }
-section { padding-block: 72px; }
-.head { display: grid; gap: 12px; justify-items: center; text-align: center; margin-bottom: 40px; }
-.head p { color: var(--muted); max-width: 56ch; }
+kbd { font: 500 0.8em var(--mono); background: var(--surface2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 7px; color: var(--fg); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font: 600 0.75rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.grad { background: linear-gradient(100deg, var(--accent) 10%, var(--accent2) 50%, #ffffff 60%, var(--accent) 90%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
+@keyframes shine { to { background-position: -250% 0; } }
+section { position: relative; padding-block: 120px; }
+.head { display: grid; gap: 16px; justify-items: center; text-align: center; margin-bottom: 56px; }
+.head h2 { font-size: clamp(2.2rem, 6vw, 4.2rem); letter-spacing: -0.035em; font-weight: 800; }
+.head p { color: var(--muted); max-width: 54ch; font-size: 1.1rem; }
 
-.btn { appearance: none; border: 0; cursor: pointer; font: 600 1rem var(--body); background: var(--accent); color: var(--accent-ink); border-radius: 12px; padding: 13px 22px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: transform .15s, box-shadow .15s; box-shadow: 0 8px 30px var(--glow); }
-.btn:hover { transform: translateY(-1px); }
-.btn.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line); box-shadow: none; }
+/* Grain over everything, like the film. */
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.06; mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+.btn { position: relative; appearance: none; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1rem var(--body); border-radius: 14px; padding: 15px 26px; color: #0a0a14; background: linear-gradient(135deg, #a9acff, var(--accent) 50%, #7a6cff); box-shadow: 0 0 0 1px rgba(255,255,255,0.15) inset, 0 12px 40px -8px rgba(138,142,255,0.6); transition: box-shadow .3s; will-change: transform; }
+.btn:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.25) inset, 0 18px 60px -6px rgba(138,142,255,0.85); }
 .btn svg { width: 18px; height: 18px; flex: none; }
+.btn.ghost { color: var(--fg); background: var(--surface); box-shadow: 0 0 0 1px var(--line) inset; backdrop-filter: blur(10px); }
 
-/* Top bar */
-nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: color-mix(in srgb, var(--bg) 78%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
-nav .wrap { display: flex; align-items: center; gap: 24px; height: 64px; }
-.brand { display: flex; align-items: center; gap: 10px; font: 700 1.15rem var(--display); color: var(--fg); text-decoration: none; }
+/* Nav */
+nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+nav.solid { background: rgba(5,5,7,0.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); border-color: var(--line); }
+nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 1.2rem var(--display); color: var(--fg); text-decoration: none; }
 .brand img { width: 30px; height: 30px; }
-nav .links { display: flex; gap: 22px; margin-left: auto; }
-nav .links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+nav .links { display: flex; gap: 26px; margin-left: auto; }
+nav .links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color .2s; }
 nav .links a:hover { color: var(--fg); }
-nav .btn { padding: 8px 16px; font-size: 0.9rem; border-radius: 10px; }
+nav .btn { padding: 9px 18px; font-size: 0.9rem; border-radius: 11px; }
 
 /* Hero */
-.hero { position: relative; padding-block: 64px 56px; }
-.hero::before { content: ""; position: absolute; inset: -120px 0 auto; height: 620px; background: radial-gradient(50% 60% at 70% 30%, var(--glow), transparent 70%); pointer-events: none; z-index: -1; }
-.hero .wrap { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; }
-.hero .wrap > * { min-width: 0; } /* the long install line scrolls inside its box instead of widening the page */
-.hero h1 { font-size: clamp(2.6rem, 6.4vw, 4.6rem); letter-spacing: -0.035em; font-weight: 800; }
-.hero .lede { color: var(--muted); font-size: 1.15rem; margin-top: 20px; max-width: 46ch; }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.or { margin-top: 26px; display: grid; gap: 8px; max-width: 480px; }
-.or span { font-size: 0.85rem; color: var(--muted); }
-.term { display: flex; align-items: center; gap: 10px; background: var(--term-bg); color: var(--term-fg); border-radius: 12px; padding: 6px 6px 6px 14px; font: 0.78rem/1.5 var(--mono); border: 1px solid var(--line); }
-.term { min-width: 0; }
-.term code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-.term code::before { content: "$ "; opacity: 0.5; }
-.term button { appearance: none; border: 0; cursor: pointer; background: rgba(255,255,255,0.1); color: var(--term-fg); font: 600 0.78rem var(--body); border-radius: 8px; padding: 7px 12px; white-space: nowrap; }
-.needs { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 18px; color: var(--muted); font-size: 0.85rem; }
-.needs span::before { content: "✓ "; color: var(--ok); }
+.hero { min-height: 100svh; padding-block: 130px 80px; display: grid; align-items: center; overflow: hidden; }
+.aurora { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; animation: drift 18s ease-in-out infinite alternate; }
+.aurora i:nth-child(1) { width: 620px; height: 620px; left: -10%; top: -20%; background: #2a1f8a; }
+.aurora i:nth-child(2) { width: 520px; height: 520px; right: -8%; top: 10%; background: #4b1f7a; animation-delay: -6s; }
+.aurora i:nth-child(3) { width: 460px; height: 460px; left: 35%; bottom: -30%; background: #13206b; animation-delay: -12s; }
+@keyframes drift { to { transform: translate(80px, 60px) scale(1.15); } }
+.gridlines { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 72px 72px; mask-image: radial-gradient(60% 50% at 50% 40%, #000 20%, transparent 75%); opacity: 0.5; }
+.hero .wrap { position: relative; display: grid; justify-items: center; text-align: center; gap: 28px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px 6px 8px; font-size: 0.85rem; color: var(--muted); backdrop-filter: blur(10px); text-decoration: none; }
+.chip b { background: var(--accent); color: #0a0a14; border-radius: 999px; padding: 1px 9px; font-size: 0.75rem; }
+.hero h1 { font-size: clamp(3.2rem, 11vw, 8.4rem); letter-spacing: -0.055em; font-weight: 800; line-height: 0.92; }
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.hero h1 .line > span { display: inline-block; }
+.messy { position: relative; display: inline-block; }
+.messy::after { content: ""; position: absolute; left: -2%; right: -2%; top: 52%; height: 0.07em; background: var(--red); border-radius: 9px; transform: scaleX(0); transform-origin: left; animation: strike 1s 1.4s cubic-bezier(.7,0,.2,1) forwards; }
+@keyframes strike { to { transform: scaleX(1); } }
+.hero .lede { color: var(--muted); font-size: clamp(1.05rem, 2.2vw, 1.3rem); max-width: 50ch; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.needs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; color: var(--dim); font-size: 0.85rem; }
 
-.screen { position: relative; border-radius: 18px; overflow: hidden; background: #050507; border: 1px solid var(--line); box-shadow: 0 30px 80px -20px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset; aspect-ratio: 16 / 9; transform: perspective(1800px) rotateY(-6deg) rotateX(3deg); transition: transform .6s; }
-.screen:hover { transform: none; }
-.screen video { width: 100%; height: 100%; display: block; object-fit: cover; }
-.sound { position: absolute; right: 12px; bottom: 12px; appearance: none; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.6); color: #fff; font: 600 0.8rem var(--body); border-radius: 999px; padding: 7px 14px; cursor: pointer; backdrop-filter: blur(8px); }
+/* The live demo window in the hero */
+.stage { width: min(820px, 100%); margin-top: 28px; perspective: 1600px; }
+.win { position: relative; text-align: left; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); border: 1px solid var(--line); box-shadow: 0 60px 120px -30px rgba(0,0,0,0.9), 0 0 120px -40px rgba(138,142,255,0.45); backdrop-filter: blur(20px); transform: rotateX(8deg); transform-origin: 50% 100%; transition: transform 1s; overflow: hidden; }
+.stage:hover .win { transform: none; }
+.win .bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.win .bar i { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.win .bar i:nth-child(2) { background: #febc2e; } .win .bar i:nth-child(3) { background: #28c840; }
+.win .bar span { margin-left: auto; margin-right: auto; font-size: 0.8rem; color: var(--muted); transform: translateX(-20px); }
+.win .body { padding: 22px 24px 26px; display: grid; gap: 16px; min-height: 250px; align-content: start; }
+.bubble { justify-self: start; background: var(--surface2); border-radius: 16px 16px 16px 4px; padding: 8px 14px; font-size: 0.95rem; color: #d8d9e6; }
+.field { position: relative; min-height: 120px; border-radius: 14px; border: 1px solid rgba(138,142,255,0.35); background: rgba(0,0,0,0.25); padding: 18px 20px; font-size: clamp(1.05rem, 2.6vw, 1.45rem); line-height: 2.1; font-weight: 500; }
+.field.rtl { direction: rtl; font-family: var(--urdu); line-height: 2.4; }
+.tok { display: inline-block; position: relative; white-space: pre; transition: max-width .55s cubic-bezier(.6,0,.2,1), opacity .4s, filter .4s, margin .55s; max-width: 20em; vertical-align: bottom; opacity: 0; filter: blur(8px); transform: translateY(6px); }
+.tok.on { opacity: 1; filter: none; transform: none; transition: opacity .25s, filter .25s, transform .25s, max-width .55s cubic-bezier(.6,0,.2,1), color .3s; }
+.tok.marked { color: var(--red); }
+.tok.marked::before { content: ""; position: absolute; inset: 0.25em -0.18em 0.1em; border: 2.5px solid var(--red); border-radius: 50%; transform: rotate(-3deg); animation: draw .45s ease-out both; }
+@keyframes draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.tok .tag { position: absolute; left: 50%; bottom: calc(100% - 0.35em); transform: translateX(-50%) rotate(-3deg); font: 700 0.5em var(--body); color: var(--red); white-space: nowrap; letter-spacing: 0.02em; animation: pop .3s .2s both; }
+@keyframes pop { from { opacity: 0; transform: translateX(-50%) translateY(6px) rotate(-3deg); } }
+.tok.gone { max-width: 0; opacity: 0; filter: blur(10px); margin: 0; }
+.clean { position: absolute; inset: 18px 20px; opacity: 0; filter: blur(12px); transform: scale(0.98); transition: opacity .7s, filter .7s, transform .7s; color: #fff; }
+.field.done .clean { opacity: 1; filter: none; transform: none; }
+.field.done .tok { opacity: 0 !important; filter: blur(12px) !important; }
+.field.done { border-color: rgba(48,209,88,0.5); box-shadow: 0 0 60px -20px rgba(48,209,88,0.5); transition: border-color .6s, box-shadow .6s; }
+.caret { display: inline-block; width: 2px; height: 1.1em; background: var(--accent); vertical-align: -0.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; box-shadow: 0 0 10px var(--accent); }
+@keyframes blink { 50% { opacity: 0; } }
 
-/* Apps strip */
-.apps { padding-block: 24px 8px; text-align: center; }
-.apps p { color: var(--muted); font-size: 0.9rem; }
-.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
-.chips span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 16px; font-weight: 500; font-size: 0.95rem; }
+/* Reword's pill */
+.pill { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 16px; border-radius: 999px; background: rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 0.82rem; font-weight: 600; white-space: nowrap; transition: width .4s; }
+.pill .wave { display: flex; align-items: center; gap: 2.5px; height: 18px; }
+.pill .wave i { width: 2.5px; height: 30%; background: #fff; border-radius: 3px; }
+.pill.listen .wave i { animation: bar .5s ease-in-out infinite alternate; }
+.pill .wave i:nth-child(2n) { animation-delay: -.2s; } .pill .wave i:nth-child(3n) { animation-delay: -.35s; } .pill .wave i:nth-child(5n) { animation-delay: -.1s; }
+@keyframes bar { from { height: 20%; } to { height: 100%; } }
+.pill .spin { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff; animation: rot .7s linear infinite; }
+@keyframes rot { to { transform: rotate(360deg); } }
+.pill .ok { color: var(--green); }
+.pill [data-s] { display: none; align-items: center; gap: 9px; }
+.pill.listen [data-s=listen], .pill.clean [data-s=clean], .pill.done [data-s=done] { display: flex; }
+.pill .timer { font: 500 0.75rem var(--mono); color: #a3a3ab; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.dots button { appearance: none; border: 0; cursor: pointer; height: 6px; width: 6px; border-radius: 9px; background: var(--dim); padding: 0; transition: width .3s, background .3s; }
+.dots button.on { width: 26px; background: var(--accent); }
 
-/* Before / after */
-.demo { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.card .label { color: var(--muted); }
-.said { font-size: 1.15rem; color: var(--muted); }
-.said s { text-decoration-color: var(--bad); text-decoration-thickness: 2px; }
-.clean { font-size: 1.25rem; font-weight: 600; }
-.card.out { border-color: var(--accent); box-shadow: 0 10px 40px -10px var(--glow); }
-.card.out .label { color: var(--accent); }
-.to { align-self: center; font-size: 1.6rem; color: var(--accent); }
-.urdu { font-size: 1.5rem; direction: rtl; text-align: right; line-height: 1.9; font-family: "Noto Nastaliq Urdu", "Geeza Pro", serif; color: var(--fg); }
-.demo + .demo { margin-top: 20px; }
+/* Marquee */
+.marquee { padding-block: 26px; border-block: 1px solid var(--line); overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marquee .row { display: flex; gap: 56px; width: max-content; animation: slide 40s linear infinite; }
+.marquee span { font: 700 clamp(1.3rem, 3vw, 2rem) var(--display); color: var(--dim); letter-spacing: -0.02em; white-space: nowrap; transition: color .3s; }
+.marquee span:hover { color: var(--fg); }
+@keyframes slide { to { transform: translateX(-50%); } }
 
-/* Features */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 10px; align-content: start; transition: border-color .2s, transform .2s; }
-.feature:hover { border-color: var(--accent); transform: translateY(-2px); }
-.feature .icon { width: 42px; height: 42px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
-.feature .icon svg { width: 22px; height: 22px; }
-.feature p { color: var(--muted); font-size: 0.97rem; }
+/* Story: words light up as you scroll */
+.story { padding-block: 160px; }
+.story p { font: 800 clamp(2.4rem, 7.5vw, 6rem)/1.02 var(--display); letter-spacing: -0.045em; text-align: center; }
+.story .w { opacity: 0.12; transition: opacity .2s; }
+.story .big { margin-top: 0.5em; }
+.story .big .w { color: var(--accent); }
 
-/* Why */
-.why { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.why div { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; padding: 24px; border-top: 1px solid var(--line); }
-.why b { font: 700 1.6rem var(--display); color: var(--accent); grid-row: span 2; line-height: 1; }
-.why p { color: var(--muted); }
+/* Try it live */
+.try { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.try .copy { display: grid; gap: 18px; }
+.try .copy h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.035em; font-weight: 800; }
+.try .copy p { color: var(--muted); font-size: 1.1rem; }
+.mic-wrap { display: grid; justify-items: center; gap: 22px; padding: 36px 24px; border-radius: 28px; background: radial-gradient(70% 60% at 50% 30%, rgba(138,142,255,0.18), transparent 70%), var(--surface); border: 1px solid var(--line); }
+.mic { position: relative; width: 132px; height: 132px; border-radius: 50%; border: 0; cursor: pointer; background: radial-gradient(circle at 35% 30%, #b3b5ff, var(--accent) 45%, #5b3df0); box-shadow: 0 20px 60px -10px rgba(138,142,255,0.8), 0 0 0 1px rgba(255,255,255,0.2) inset; display: grid; place-items: center; color: #0a0a14; touch-action: none; user-select: none; -webkit-user-select: none; transition: transform .2s; }
+.mic svg { width: 46px; height: 46px; }
+.mic::before, .mic::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 2px solid rgba(138,142,255,0.5); opacity: 0; }
+.mic.live { transform: scale(1.08); }
+.mic.live::before { animation: ring 1.4s ease-out infinite; } .mic.live::after { animation: ring 1.4s .7s ease-out infinite; }
+@keyframes ring { from { opacity: 0.9; transform: scale(0.9); } to { opacity: 0; transform: scale(1.6); } }
+.livewave { display: flex; align-items: center; gap: 4px; height: 44px; }
+.livewave i { width: 4px; height: 8%; border-radius: 4px; background: var(--accent); transition: height .08s; }
+.out { width: 100%; display: grid; gap: 10px; }
+.out .box { border-radius: 14px; border: 1px solid var(--line); background: rgba(0,0,0,0.3); padding: 14px 16px; min-height: 58px; font-size: 1.05rem; }
+.out .box small { display: block; font: 600 0.7rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+.out .box.good { border-color: rgba(48,209,88,0.45); }
+.out .box.good small { color: var(--green); }
+.out del { color: var(--red); text-decoration-thickness: 2px; }
+.hint { color: var(--dim); font-size: 0.82rem; text-align: center; }
+
+/* Apps: a horizontal reel pinned while you scroll */
+.reel { overflow: hidden; padding-block: 0; }
+.reel .pin { height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; gap: 40px; }
+.reel .head { margin: 0; }
+.track { display: flex; gap: 28px; padding-inline: max(16px, calc((100vw - 1180px) / 2)); width: max-content; will-change: transform; }
+.app { width: min(560px, 82vw); flex: none; display: grid; gap: 14px; }
+.said { font: 500 0.82rem var(--mono); color: var(--muted); padding-left: 14px; border-left: 2px solid var(--accent); }
+.said b { color: var(--accent); font-weight: 500; }
+.mock { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #11121c; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9); }
+.mock.light { background: #fbfbfd; color: #1d1d1f; }
+.mock .bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; border-bottom: 1px solid rgba(128,128,128,0.18); font-size: 0.78rem; color: #8b8b95; }
+.mock .bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+.mock .bar i:nth-child(2) { background: #febc2e; } .mock .bar i:nth-child(3) { background: #28c840; }
+.mock .bar span { margin-left: 10px; }
+.mock .in { padding: 20px; display: grid; gap: 12px; min-height: 230px; align-content: start; font-size: 0.98rem; }
+.mock .meta { font-size: 0.82rem; color: #8b8b95; border-bottom: 1px solid rgba(128,128,128,0.15); padding-bottom: 8px; }
+.mock .term { font: 0.92rem/1.7 var(--mono); color: #e6e8f5; }
+.mock .term .p { color: var(--green); }
+.mock .ask { justify-self: center; font-weight: 700; font-size: 1.15rem; margin-top: 16px; }
+.mock .prompt { border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 14px 16px; background: #1c1d2a; }
+.mock .msg { display: flex; gap: 10px; }
+.mock .msg .av { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, #f7a, #a7f); flex: none; }
+.mock .msg b { display: block; font-size: 0.9rem; }
+.mock .wa { justify-self: end; background: #dcf8c6; color: #111; border-radius: 14px 14px 4px 14px; padding: 8px 12px; max-width: 85%; }
+.mock .wa.them { justify-self: start; background: #fff; border: 1px solid #eee; border-radius: 14px 14px 14px 4px; }
+.mock.chatbg { background: #efeae2; color: #111; }
+
+/* Bento */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.cell { position: relative; grid-column: span 2; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); padding: 26px; display: grid; gap: 12px; align-content: start; overflow: hidden; min-height: 280px; isolation: isolate; }
+.cell.wide { grid-column: span 3; }
+.cell::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s; background: radial-gradient(380px circle at var(--x, 50%) var(--y, 50%), rgba(138,142,255,0.16), transparent 60%); }
+.cell:hover::before { opacity: 1; }
+.cell h3 { font-size: 1.35rem; letter-spacing: -0.02em; }
+.cell > p { color: var(--muted); font-size: 0.98rem; }
+.demo-area { margin-top: auto; border-radius: 14px; background: rgba(0,0,0,0.35); border: 1px solid var(--line); padding: 16px; font-size: 0.98rem; min-height: 104px; display: grid; gap: 10px; align-content: center; }
+.tones { display: flex; gap: 6px; flex-wrap: wrap; }
+.tones span { font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); transition: all .3s; }
+.tones span.on { background: var(--accent); color: #0a0a14; border-color: var(--accent); }
+.swap { transition: opacity .35s, filter .35s; }
+.swap.out { opacity: 0; filter: blur(6px); }
+.ur { font-family: var(--urdu); direction: rtl; text-align: right; font-size: 1.15rem; line-height: 2.1; }
+.learn { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.learn .from { color: var(--red); text-decoration: line-through; }
+.learn .to { color: #fff; font-weight: 700; }
+.badge { font-size: 0.72rem; font-weight: 700; color: var(--green); border: 1px solid rgba(48,209,88,0.4); border-radius: 999px; padding: 2px 10px; }
+.lock { font-size: 2.6rem; }
+.flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); }
+.flow b { color: var(--fg); background: var(--surface2); border-radius: 8px; padding: 4px 10px; font-weight: 600; }
+
+/* Calculator */
+.calc { border-radius: 28px; border: 1px solid var(--line); background: radial-gradient(60% 90% at 50% 0%, rgba(138,142,255,0.16), transparent 70%), var(--surface); padding: clamp(28px, 6vw, 64px); display: grid; gap: 28px; justify-items: center; text-align: center; }
+.calc label { color: var(--muted); font-size: 1.05rem; }
+.calc label b { color: var(--fg); font: 700 1.3rem var(--display); }
+.calc input[type=range] { width: min(520px, 100%); accent-color: var(--accent); height: 28px; }
+.hours { font: 800 clamp(4.5rem, 16vw, 11rem)/0.9 var(--display); letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+.calc .sub { color: var(--muted); font-size: 1.1rem; }
+.calc .sub b { color: var(--fg); }
+.fine { color: var(--dim); font-size: 0.8rem; }
+
+/* Film */
+.film { position: relative; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 9; background: #000; box-shadow: 0 60px 140px -40px rgba(138,142,255,0.35); }
+.film video { width: 100%; height: 100%; display: block; object-fit: cover; }
+.play { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.55)); border: 0; cursor: pointer; color: #fff; transition: opacity .4s; }
+.play span { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,0.14); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.3); transition: transform .3s; }
+.play:hover span { transform: scale(1.1); }
+.play svg { width: 34px; height: 34px; margin-left: 5px; }
+.film.playing .play { opacity: 0; pointer-events: none; }
 
 /* FAQ */
-.faq { max-width: 760px; margin: 0 auto; display: grid; gap: 10px; }
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; }
-summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq { max-width: 780px; margin: 0 auto; display: grid; gap: 10px; }
+details { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 4px 22px; transition: background .3s; }
+details[open] { background: var(--surface2); }
+summary { cursor: pointer; font-weight: 600; font-size: 1.05rem; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
 summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; color: var(--accent); font-size: 1.3rem; line-height: 1; transition: transform .2s; }
+summary::after { content: "+"; color: var(--accent); font-size: 1.4rem; line-height: 1; transition: transform .3s; }
 details[open] summary::after { transform: rotate(45deg); }
-details p { color: var(--muted); padding-bottom: 16px; }
+details p { color: var(--muted); padding-bottom: 18px; }
 
-/* Closing */
-.final { text-align: center; }
-.final .box { border: 1px solid var(--line); border-radius: 28px; padding: 64px 24px; background: radial-gradient(60% 80% at 50% 0%, var(--glow), transparent 70%), var(--surface); display: grid; gap: 18px; justify-items: center; }
-.final img { width: 84px; height: 84px; }
-.final p { color: var(--muted); }
-footer { padding-block: 32px 48px; color: var(--muted); font-size: 0.88rem; }
+/* Final */
+.final { text-align: center; padding-block: 140px 100px; overflow: hidden; }
+.final h2 { font-size: clamp(3.4rem, 14vw, 11rem); letter-spacing: -0.06em; font-weight: 800; line-height: 0.9; }
+.final .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 44px; }
+.term-line { display: flex; align-items: center; gap: 10px; max-width: 640px; margin: 22px auto 0; border-radius: 14px; border: 1px solid var(--line); background: rgba(0,0,0,0.4); padding: 6px 6px 6px 16px; font: 0.8rem var(--mono); text-align: left; }
+.term-line code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; color: #cfd0e0; }
+.term-line code::before { content: "$ "; color: var(--dim); }
+.term-line button { appearance: none; border: 0; cursor: pointer; background: var(--surface2); color: var(--fg); border-radius: 10px; padding: 8px 14px; font: 600 0.8rem var(--body); }
+footer { border-top: 1px solid var(--line); padding-block: 30px 44px; color: var(--dim); font-size: 0.88rem; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
 footer a { color: var(--muted); }
 
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s, transform .7s; }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } .screen { transform: none; } html { scroll-behavior: auto; } }
+.reveal { opacity: 0; transform: translateY(40px); }
 
 @media (max-width: 900px) {
-  .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
-  .screen { transform: none; }
-  .grid { grid-template-columns: 1fr 1fr; }
+  .try { grid-template-columns: 1fr; }
+  .bento { grid-template-columns: 1fr 1fr; }
+  .cell, .cell.wide { grid-column: span 1; }
 }
 @media (max-width: 640px) {
   nav .links { display: none; }
   nav .btn { margin-left: auto; }
-  section { padding-block: 52px; }
-  .grid, .why { grid-template-columns: 1fr; }
-  .demo { grid-template-columns: 1fr; }
-  .to { justify-self: center; transform: rotate(90deg); }
-  .cta .btn { flex: 1 1 auto; justify-content: center; }
+  section { padding-block: 80px; }
+  .story { padding-block: 100px; }
+  .bento { grid-template-columns: 1fr; }
+  .cell { min-height: 0; }
+  .win .body { padding: 16px; min-height: 240px; }
+  .hero .cta .btn { flex: 1 1 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .aurora i, .marquee .row, .grad { animation: none; }
+  .story .w { opacity: 1; }
 }
 </style>
 </head>
 <body>
 
-<nav>
+<nav id="nav">
   <div class="wrap">
-    <a class="brand" href="#"><img src="icon.png" alt="">Reword</a>
-    <div class="links"><a href="#features">Features</a><a href="#faq">FAQ</a><a href="install.html">Install guide</a></div>
+    <a class="brand" href="#top"><img src="icon.png" alt="">Reword</a>
+    <div class="links"><a href="#try">Try it</a><a href="#features">Features</a><a href="#film">Film</a><a href="#faq">FAQ</a><a href="install.html">Install guide</a></div>
     <a class="btn dl" href="https://github.com/noorxhk/reword-releases/releases/latest">Download</a>
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" id="top">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="gridlines" aria-hidden="true"></div>
   <div class="wrap">
-    <div>
-      <span class="label">Free for Mac</span>
-      <h1 style="margin-top:14px">Think in Urdu.<br><span class="accent">Send in English.</span></h1>
-      <p class="lede">Hold <kbd>fn</kbd> and speak in English, Urdu or Roman Urdu. Reword types clean, polished text in any app, with the ums and “no wait” already gone.</p>
-      <div class="cta">
-        <a class="btn dl" href="https://github.com/noorxhk/reword-releases/releases/latest">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-          Download for Mac
-        </a>
-        <a class="btn ghost" href="install.html">Install guide</a>
-      </div>
-      <div class="or">
-        <span>Or install with one line in Terminal</span>
-        <div class="term"><code id="cmd">curl -fsSL https://raw.githubusercontent.com/noorxhk/reword-releases/main/install.sh | bash</code><button id="copy" type="button">Copy</button></div>
-      </div>
-      <div class="needs"><span>macOS 26 or later</span><span>Apple silicon</span><span>No account</span></div>
+    <a class="chip" href="#film"><b>New</b><span id="ver">Free for Mac</span> · Watch the film →</a>
+    <h1><span class="line"><span>Speak <span class="messy">messy.</span></span></span><span class="line"><span>Send <span class="grad">perfect.</span></span></span></h1>
+    <p class="lede">Hold <kbd>fn</kbd> and just talk, in English, Urdu or both at once. Reword types what you <em>meant</em>, cleaned up, in any app on your Mac.</p>
+    <div class="cta">
+      <a class="btn dl magnet" href="https://github.com/noorxhk/reword-releases/releases/latest">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>
+        Download for Mac
+      </a>
+      <a class="btn ghost" href="#try">Try it in your browser</a>
     </div>
-    <div class="screen">
-      <video id="film" src="film.mp4" poster="poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Reword film: messy speech becomes clean text in Messages, Mail, a terminal and ChatGPT"></video>
-      <button class="sound" id="sound" type="button">🔊 Watch with sound</button>
+    <div class="needs"><span>Free</span><span>·</span><span>No account</span><span>·</span><span>macOS 26+ on Apple silicon</span></div>
+
+    <div class="stage" aria-label="Animated example: messy speech becomes clean text">
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span id="appname">Messages · Sara</span></div>
+        <div class="body">
+          <div class="bubble" id="ask">When are we meeting about Q4?</div>
+          <div class="field" id="field"></div>
+        </div>
+        <div class="pill" id="pill">
+          <div data-s="listen"><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="timer" id="timer">0:00</span></div>
+          <div data-s="clean"><div class="spin"></div>Cleaning up</div>
+          <div data-s="done"><span class="ok">✓</span><span id="donetext">Done</span></div>
+        </div>
+      </div>
+      <div class="dots" id="dots"></div>
     </div>
   </div>
 </header>
 
-<div class="apps wrap">
-  <p>Works wherever you can type</p>
-  <div class="chips"><span>WhatsApp</span><span>Slack</span><span>Mail</span><span>Gmail</span><span>ChatGPT</span><span>Notes</span><span>VS Code</span><span>Cursor</span><span>Teams</span><span>Terminal</span></div>
+<div class="marquee" aria-label="Works in any app">
+  <div class="row"></div>
 </div>
 
-<section>
+<section class="story" aria-label="Why">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="label">See the difference</span>
-      <h2>Talk like you talk.<br>Send it like you wrote it.</h2>
+    <p class="split">You think in seconds. You type in minutes. Your best ideas wait for your fingers.</p>
+    <p class="split big">So stop typing.</p>
+  </div>
+</section>
+
+<section id="try">
+  <div class="wrap try">
+    <div class="copy reveal">
+      <span class="eyebrow">Try it right here</span>
+      <h2>Go on. Say something <span class="grad">messy.</span></h2>
+      <p>Hold the button and talk like you normally do. Change your mind halfway: “Tuesday, no wait, Wednesday”. Watch what comes out.</p>
+      <p class="fine">This little demo uses your browser's speech recognition and simple rules. The Mac app understands Urdu too, and does the real cleanup with AI.</p>
     </div>
-    <div class="demo reveal">
-      <div class="card"><span class="label">You say</span><p class="said">“Um, so let's meet on <s>Tuesday, no wait,</s> Wednesday at three. And uh, bring the, like, the Q4 numbers.”</p></div>
-      <span class="to" aria-hidden="true">→</span>
-      <div class="card out"><span class="label">Reword types</span><p class="clean">Let's meet on Wednesday at 3 and bring the Q4 numbers.</p></div>
+    <div class="mic-wrap reveal">
+      <button class="mic" id="mic" type="button" aria-label="Hold to talk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      </button>
+      <div class="livewave" id="livewave" aria-hidden="true"></div>
+      <div class="out">
+        <div class="box" id="rawbox"><small>You said</small><span id="raw">Hold the button and speak…</span></div>
+        <div class="box good" id="cleanbox"><small>Reword types</small><span id="cleaned">…</span></div>
+      </div>
+      <p class="hint" id="hint">Hold to talk · or hold the Space bar</p>
     </div>
-    <div class="demo reveal">
-      <div class="card"><span class="label">You say, in Urdu</span><p class="urdu" lang="ur">کل میٹنگ تین بجے ہے، پریزنٹیشن تیار کر لینا۔</p></div>
-      <span class="to" aria-hidden="true">→</span>
-      <div class="card out"><span class="label">Reword sends, in English</span><p class="clean">The meeting is tomorrow at 3. Please have the presentation ready.</p></div>
+  </div>
+</section>
+
+<section class="reel" id="apps">
+  <div class="pin">
+    <div class="head wrap">
+      <span class="eyebrow">Every app</span>
+      <h2>One shortcut. Every text box.</h2>
+    </div>
+    <div class="track" id="track">
+      <div class="app">
+        <p class="said">said: “hey ali, um, can you send the contract <b>by friday</b>, actually <b>thursday</b>, thanks”</p>
+        <div class="mock light"><div class="bar"><i></i><i></i><i></i><span>Mail · New message</span></div>
+          <div class="in"><div class="meta">To: Ali Raza</div><div class="meta">Subject: Contract</div><p>Hi Ali,<br><br>Could you send the contract by Thursday?<br><br>Thanks</p></div></div>
+      </div>
+      <div class="app">
+        <p class="said">said: “git checkout release <b>forward slash</b> one point zero point seven”</p>
+        <div class="mock"><div class="bar"><i></i><i></i><i></i><span>Terminal · zsh</span></div>
+          <div class="in term"><span><span class="p">~/app ❯</span> git checkout release/1.0.7</span><span style="color:#8b8b95">Switched to branch 'release/1.0.7'</span><span><span class="p">~/app ❯</span> <span class="caret"></span></span></div></div>
+      </div>
+      <div class="app">
+        <p class="said">said: “yaar kal ki meeting <b>cancel, I mean postpone</b> kar do”</p>
+        <div class="mock chatbg"><div class="bar" style="background:#f6f6f6"><i></i><i></i><i></i><span>WhatsApp · Team</span></div>
+          <div class="in"><p class="wa them">Kal ki meeting ka kya plan hai?</p><p class="wa">Yaar, kal ki meeting postpone kar do.</p></div></div>
+      </div>
+      <div class="app">
+        <p class="said">said: “explain this error in, like, plain english and uh suggest the smallest fix”</p>
+        <div class="mock"><div class="bar"><i></i><i></i><i></i><span>ChatGPT</span></div>
+          <div class="in"><p class="ask">What can I help with?</p><p class="prompt">Explain this error in plain English and suggest the smallest fix.</p></div></div>
+      </div>
+      <div class="app">
+        <p class="said">said: “quick update, the homepage is done, <b>new line</b> next up is the pricing page”</p>
+        <div class="mock"><div class="bar"><i></i><i></i><i></i><span>Slack · #design</span></div>
+          <div class="in"><div class="msg"><span class="av"></span><div><b>You</b>Quick update: the homepage is done.<br>Next up is the pricing page.</div></div></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -226,55 +396,72 @@ footer a { color: var(--muted); }
 <section id="features">
   <div class="wrap">
     <div class="head reveal">
-      <span class="label">Features</span>
-      <h2>Everything between your voice and the send button</h2>
+      <span class="eyebrow">More than dictation</span>
+      <h2>Your words, <span class="grad">upgraded.</span></h2>
+      <p>Select any text, anywhere, and change it with one shortcut or one sentence.</p>
     </div>
-    <div class="grid">
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
-        <h3>Dictate anywhere</h3>
-        <p>Hold <kbd>fn</kbd>, speak, let go. Your words appear where the cursor is. Double-tap <kbd>fn</kbd> to go hands-free.</p>
+    <div class="bento">
+      <div class="cell wide reveal">
+        <h3>Rewrite in any tone</h3>
+        <p>Select text and press <kbd>⌥2</kbd>. Pick from three versions.</p>
+        <div class="demo-area"><div class="tones" id="tones"><span>Original</span><span>Polite</span><span>Formal</span><span>Shorter</span></div><p class="swap" id="tonetext"></p></div>
       </div>
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div>
-        <h3>Cleans as you speak</h3>
-        <p>Filler words, false starts and “2pm, actually 3pm” are fixed for you. Spoken lists turn into real lists.</p>
+      <div class="cell wide reveal">
+        <h3>Think in Urdu, send in English</h3>
+        <p>Speak Urdu and send English. Or turn Roman Urdu into proper script.</p>
+        <div class="demo-area"><p class="swap" id="trans"></p></div>
       </div>
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13 7l4 4"/></svg></div>
-        <h3>Rewrite anything</h3>
-        <p>Select text and press <kbd>⌥2</kbd>: rephrase, shorten, make it formal, fix grammar or change the tone.</p>
-      </div>
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h8M8 3v2m2 0c0 4-3 8-6 9m2-5c1 2 3 4 6 5M13 21l4-9 4 9m-7-3h6"/></svg></div>
-        <h3>Urdu ↔ English</h3>
-        <p>Speak Urdu, send English. Or turn Roman Urdu into proper Urdu script. Hindi works too.</p>
-      </div>
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+      <div class="cell reveal">
         <h3>Speak a command</h3>
-        <p>Select text, hold <kbd>fn</kbd> + <kbd>⌃</kbd> and say what you want: “make it polite and shorter”.</p>
+        <p>Select text, hold <kbd>fn</kbd> + <kbd>⌃</kbd> and say what to change.</p>
+        <div class="demo-area"><p style="color:var(--accent)">🎙 “make it polite and shorter”</p><p>Could you share the report today?</p></div>
       </div>
-      <div class="feature reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
+      <div class="cell reveal">
         <h3>Learns your words</h3>
-        <p>A dictionary that picks up names and terms you fix, snippets for things you type often, and a style per app.</p>
+        <p>Fix a name once. Reword remembers it.</p>
+        <div class="demo-area"><div class="learn"><span class="from">cuber nettys</span>→<span class="to">Kubernetes</span></div><span class="badge">+ Added to dictionary</span></div>
+      </div>
+      <div class="cell reveal">
+        <h3>Private by design</h3>
+        <p>Your voice becomes text on your Mac. No account, no Reword server.</p>
+        <div class="demo-area"><div class="flow"><b>🎙 Voice</b>→<b>💻 Your Mac</b>→<b>Text</b></div></div>
+      </div>
+      <div class="cell wide reveal">
+        <h3>Snippets</h3>
+        <p>Say a few words, get the long thing.</p>
+        <div class="demo-area"><p style="color:var(--accent)">🎙 “my calendar”</p><p>You can book a time here: cal.com/you/30min</p></div>
+      </div>
+      <div class="cell wide reveal">
+        <h3>A style for every app</h3>
+        <p>Casual Roman Urdu in WhatsApp. Polished English in Mail. Code-friendly in your editor.</p>
+        <div class="demo-area"><div class="tones"><span class="on">WhatsApp · casual</span><span>Mail · professional</span><span>VS Code · code</span></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="time">
+  <div class="wrap">
+    <div class="calc reveal">
+      <span class="eyebrow">Do the math</span>
+      <label for="msgs">Messages you write a day: <b id="msgsval">40</b></label>
+      <input type="range" id="msgs" min="5" max="200" step="5" value="40">
+      <div class="hours"><span id="hours">0</span><span style="font-size:0.35em;letter-spacing:-0.02em"> hours</span></div>
+      <p class="sub">back every year. That's <b id="days">0 workdays</b> you don't spend typing.</p>
+      <p class="fine">Based on 30 words a message, typing at 40 words a minute and speaking at 150.</p>
+    </div>
+  </div>
+</section>
+
+<section id="film">
   <div class="wrap">
     <div class="head reveal">
-      <span class="label">Why Reword</span>
-      <h2>Made for how we actually talk</h2>
+      <span class="eyebrow">The film</span>
+      <h2>56 seconds. Turn the sound on.</h2>
     </div>
-    <div class="why">
-      <div class="reveal"><b>01</b><h3>Your voice stays on your Mac</h3><p>Speech becomes text right on your Mac. Only the text goes to the AI service you pick, with your own key.</p></div>
-      <div class="reveal"><b>02</b><h3>Free, no account</h3><p>No sign-up, no subscription, no Reword server. Download it and start talking.</p></div>
-      <div class="reveal"><b>03</b><h3>Built for mixed languages</h3><p>Most of us switch between Urdu and English mid-sentence. Reword is built for exactly that.</p></div>
-      <div class="reveal"><b>04</b><h3>Updates in one click</h3><p>New versions show up in the menu bar. Click Install update and you're done.</p></div>
+    <div class="film reveal" id="filmbox">
+      <video id="filmvid" src="film.mp4" poster="poster.jpg" preload="none" playsinline controls></video>
+      <button class="play" id="play" type="button" aria-label="Play the film"><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span></button>
     </div>
   </div>
 </section>
@@ -282,74 +469,287 @@ footer a { color: var(--muted); }
 <section id="faq">
   <div class="wrap">
     <div class="head reveal">
-      <span class="label">FAQ</span>
+      <span class="eyebrow">FAQ</span>
       <h2>Before you install</h2>
     </div>
-    <div class="faq">
-      <details><summary>Is Reword really free?</summary><p>Yes. Dictation is free and runs on your Mac. For cleanup and rewriting, you add a free key from Groq, Google Gemini or OpenRouter. It takes a minute, and the install guide shows how.</p></details>
-      <details><summary>Where does my voice go?</summary><p>Nowhere. Your speech is turned into text on your Mac. When cleanup is on, only that text is sent to the AI service you chose. Your key is kept in your Mac's Keychain.</p></details>
-      <details><summary>Why does macOS say it can't open Reword?</summary><p>Reword isn't from the App Store, so the first time macOS asks you to confirm. Go to System Settings › Privacy &amp; Security and click Open Anyway. You only do this once. The one-line Terminal install skips this step.</p></details>
-      <details><summary>Which languages does it understand?</summary><p>English, Urdu, Roman Urdu and Hindi, including mixed sentences. Pick “Urdu + English” in Settings › Voice if you switch between them.</p></details>
+    <div class="faq reveal">
+      <details><summary>Is Reword really free?</summary><p>Yes. Dictation is free and runs on your Mac. For cleanup and rewriting you add a free key from Groq, Google Gemini or OpenRouter. It takes a minute, and the install guide shows how.</p></details>
+      <details><summary>Where does my voice go?</summary><p>Nowhere. Your speech is turned into text on your Mac. When cleanup is on, only that text goes to the AI service you chose, with your own key, which stays in your Mac's Keychain.</p></details>
+      <details><summary>Why does macOS say it can't open Reword?</summary><p>Reword isn't from the App Store, so the first time macOS asks you to confirm. Go to System Settings › Privacy &amp; Security and click Open Anyway. You only do this once. The one-line Terminal install skips it.</p></details>
+      <details><summary>Which languages does it understand?</summary><p>English, Urdu, Roman Urdu and Hindi, including sentences that mix them. Pick “Urdu + English” in Settings › Voice if you switch between them.</p></details>
       <details><summary>Which Macs does it run on?</summary><p>Any Mac with Apple silicon (M1 or newer) on macOS 26 Tahoe or later.</p></details>
-      <details><summary>Why does it need Accessibility permission?</summary><p>To type the text where your cursor is and to read the text you select for rewriting. It doesn't record your screen.</p></details>
+      <details><summary>Why does it need Accessibility permission?</summary><p>To type text where your cursor is, and to read the text you select for rewriting. It doesn't record your screen.</p></details>
     </div>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
-    <div class="box reveal">
-      <img src="icon.png" alt="">
-      <h2>Stop typing. Start saying.</h2>
-      <p>Free for Mac. Set up in about five minutes.</p>
-      <div class="cta" style="justify-content:center;margin-top:6px">
-        <a class="btn dl" href="https://github.com/noorxhk/reword-releases/releases/latest">Download for Mac</a>
-        <a class="btn ghost" href="install.html">Install guide</a>
-      </div>
+    <h2>So stop<br><span class="grad">typing.</span></h2>
+    <div class="cta reveal">
+      <a class="btn dl magnet" href="https://github.com/noorxhk/reword-releases/releases/latest">Download for Mac</a>
+      <a class="btn ghost" href="install.html">Install guide</a>
     </div>
+    <div class="term-line reveal"><code id="cmd">curl -fsSL https://raw.githubusercontent.com/noorxhk/reword-releases/main/install.sh | bash</code><button id="copy" type="button">Copy</button></div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>Reword · <span id="ver">Free for Mac</span></span>
+    <span>Reword · Free for Mac</span>
     <span><a href="install.html">Install guide</a> · <a href="https://github.com/noorxhk/reword-releases/releases">All releases</a></span>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// Download buttons fetch the latest DMG directly; without the API they fall back to the releases page.
+const $ = (s) => document.querySelector(s);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Download buttons get the latest DMG straight from GitHub; without the API they keep the releases page.
 fetch("https://api.github.com/repos/noorxhk/reword-releases/releases/latest")
   .then((r) => r.json())
   .then((rel) => {
     const dmg = rel.assets.find((a) => a.name.endsWith(".dmg"));
     if (!dmg) return;
     document.querySelectorAll("a.dl").forEach((a) => (a.href = dmg.browser_download_url));
-    document.getElementById("ver").textContent = `Version ${rel.tag_name.replace(/^v/, "")}`;
+    $("#ver").textContent = `Reword ${rel.tag_name.replace(/^v/, "")} is out`;
   })
   .catch(() => {});
 
-document.getElementById("copy").addEventListener("click", async (e) => {
-  const cmd = document.getElementById("cmd");
-  try {
-    await navigator.clipboard.writeText(cmd.textContent);
-    e.target.textContent = "Copied";
-  } catch {
-    getSelection().selectAllChildren(cmd);
-    e.target.textContent = "Press ⌘C";
+addEventListener("scroll", () => $("#nav").classList.toggle("solid", scrollY > 20), { passive: true });
+
+/* ---------- Hero: messy speech in, clean text out ---------- */
+// Each word: [text, tag?]. A tag marks words Reword removes; the label shows on the first word of a run.
+const SCENES = [
+  { app: "Messages · Sara", ask: "When are we meeting about Q4?", done: "+6s saved",
+    words: [["Um,", "filler"], ["so", "x"], ["let's"], ["meet"], ["on"], ["Tuesday,", "changed mind"], ["no", "x"], ["wait,", "x"], ["Wednesday"], ["at"], ["three."], ["And", "filler"], ["uh,", "x"], ["bring"], ["the,", "rambling"], ["like,", "x"], ["the"], ["Q4"], ["numbers."]],
+    clean: "Let's meet on Wednesday at 3 and bring the Q4 numbers." },
+  { app: "WhatsApp · Team", ask: "Kal ki meeting ka kya plan hai?", done: "+5s saved",
+    words: [["Yaar,"], ["um,", "filler"], ["kal"], ["ki"], ["meeting"], ["cancel,", "changed mind"], ["I", "x"], ["mean,", "x"], ["postpone"], ["kar"], ["do."], ["Client"], ["ko"], ["bhi"], ["bata"], ["dena."]],
+    clean: "Yaar, kal ki meeting postpone kar do. Client ko bhi bata dena." },
+  { app: "Mail · Hamza", ask: "Is everything set for tomorrow?", done: "Urdu → English", rtl: true,
+    words: [["کل"], ["میٹنگ"], ["تین"], ["بجے"], ["ہے،"], ["پریزنٹیشن"], ["تیار"], ["کر"], ["لینا۔"]],
+    clean: "The meeting is tomorrow at 3. Please have the presentation ready." },
+];
+const field = $("#field"), pill = $("#pill"), dots = $("#dots");
+let scene = 0, run = 0;
+SCENES.forEach((_, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.setAttribute("aria-label", `Example ${i + 1}`);
+  b.onclick = () => play(i);
+  dots.append(b);
+});
+
+async function play(i) {
+  const me = ++run, s = SCENES[i];
+  scene = i;
+  [...dots.children].forEach((d, k) => d.classList.toggle("on", k === i));
+  $("#appname").textContent = s.app;
+  $("#ask").textContent = s.ask;
+  field.className = "field" + (s.rtl ? " rtl" : "");
+  field.innerHTML = "";
+  const toks = s.words.map(([w, tag]) => {
+    const t = document.createElement("span");
+    t.className = "tok"; t.textContent = w + " ";
+    t.dataset.tag = tag || "";
+    field.append(t);
+    return t;
+  });
+  const caret = document.createElement("span"); caret.className = "caret"; field.append(caret);
+  const clean = document.createElement("div"); clean.className = "clean"; clean.textContent = s.clean; clean.dir = "ltr"; clean.style.fontFamily = "var(--body)"; field.append(clean);
+  pill.className = "pill listen";
+  const t0 = Date.now();
+  const tick = setInterval(() => ($("#timer").textContent = "0:" + String(Math.floor((Date.now() - t0) / 1000)).padStart(2, "0")), 250);
+  for (const t of toks) {
+    if (me !== run) return clearInterval(tick);
+    t.classList.add("on");
+    field.insertBefore(caret, t.nextSibling);
+    await sleep(130 + t.textContent.length * 22);
   }
+  clearInterval(tick);
+  await sleep(500);
+  caret.remove();
+  // Circle what Reword will drop, run by run, with a red marker label.
+  for (const t of toks) {
+    if (me !== run) return;
+    if (!t.dataset.tag) continue;
+    t.classList.add("marked");
+    if (t.dataset.tag !== "x") { const l = document.createElement("span"); l.className = "tag"; l.textContent = t.dataset.tag; t.append(l); await sleep(260); }
+    await sleep(90);
+  }
+  pill.className = "pill clean";
+  await sleep(900);
+  if (me !== run) return;
+  toks.filter((t) => t.dataset.tag).forEach((t) => t.classList.add("gone"));
+  await sleep(600);
+  field.classList.add("done");
+  $("#donetext").textContent = s.done;
+  pill.className = "pill done";
+  await sleep(3200);
+  if (me === run) play((i + 1) % SCENES.length);
+}
+play(0);
+
+/* ---------- Marquee ---------- */
+const APPS = ["WhatsApp", "Slack", "Mail", "Gmail", "ChatGPT", "Claude", "Notion", "VS Code", "Cursor", "Teams", "Notes", "Terminal", "Linear", "Figma"];
+$(".marquee .row").innerHTML = [...APPS, ...APPS].map((a) => `<span>${a}</span>`).join("");
+
+/* ---------- Try it live ---------- */
+const FILLERS = /\b(um+|uh+|uhm|erm|hmm+|you know)\b[,]?\s*/gi;
+const BACKTRACK = /\b(\S+)[,]?\s+(?:no wait|no no|actually|sorry|i mean),?\s+/gi;
+// A taste of the app's cleanup: drop fillers, keep only the corrected word after "no wait" and friends.
+function tidy(raw) {
+  let s = " " + raw.trim() + " ";
+  const marked = s.replace(BACKTRACK, (m, w) => `<del>${w}</del> `).replace(FILLERS, (m) => `<del>${m.trim()}</del> `);
+  s = s.replace(BACKTRACK, "").replace(FILLERS, "").replace(/\b(\w+) \1\b/gi, "$1").replace(/\s+([,.?!])/g, "$1").replace(/\s{2,}/g, " ").trim();
+  s = s.replace(/\blike,\s*/gi, "");
+  if (s) s = s[0].toUpperCase() + s.slice(1) + (/[.?!]$/.test(s) ? "" : ".");
+  return { marked: marked.trim(), clean: s };
+}
+console.assert(tidy("um so lets meet on tuesday no wait wednesday").clean === "So lets meet on wednesday.", "tidy");
+
+const mic = $("#mic"), wave = $("#livewave");
+wave.innerHTML = "<i></i>".repeat(24);
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec, stream, ctx, raf, finalText = "", live = false;
+
+async function startTalk() {
+  if (live) return;
+  live = true; mic.classList.add("live");
+  finalText = "";
+  $("#raw").textContent = "Listening…"; $("#cleaned").textContent = "…";
+  if (!SR) { $("#hint").textContent = "Your browser can't listen, so here's a sample."; return; }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    ctx = new AudioContext();
+    const an = ctx.createAnalyser(); an.fftSize = 64;
+    ctx.createMediaStreamSource(stream).connect(an);
+    const data = new Uint8Array(an.frequencyBinCount), bars = [...wave.children];
+    const draw = () => { an.getByteFrequencyData(data); bars.forEach((b, i) => (b.style.height = Math.max(8, data[i + 2] / 2.55) + "%")); raf = requestAnimationFrame(draw); };
+    draw();
+  } catch { $("#hint").textContent = "Allow the microphone to try it."; }
+  rec = new SR(); rec.lang = "en-US"; rec.interimResults = true; rec.continuous = true;
+  rec.onresult = (e) => {
+    let interim = ""; finalText = "";
+    for (const r of e.results) (r.isFinal ? (finalText += r[0].transcript + " ") : (interim += r[0].transcript));
+    $("#raw").textContent = (finalText + interim).trim() || "Listening…";
+  };
+  rec.onend = () => show(finalText || $("#raw").textContent);
+  rec.start();
+}
+function stopTalk() {
+  if (!live) return;
+  live = false; mic.classList.remove("live");
+  cancelAnimationFrame(raf);
+  [...wave.children].forEach((b) => (b.style.height = "8%"));
+  stream?.getTracks().forEach((t) => t.stop()); ctx?.close();
+  if (rec) rec.stop(); else show("um so let's meet on tuesday no wait wednesday at three and uh bring the Q4 numbers");
+}
+function show(text) {
+  if (!text || text === "Listening…") { $("#raw").textContent = "I didn't catch that. Hold a bit longer."; return; }
+  const { marked, clean } = tidy(text);
+  $("#raw").innerHTML = marked;
+  $("#cleaned").textContent = clean;
+  window.gsap?.fromTo("#cleanbox", { scale: 0.96, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" });
+}
+mic.addEventListener("pointerdown", (e) => { mic.setPointerCapture(e.pointerId); startTalk(); });
+mic.addEventListener("pointerup", stopTalk);
+mic.addEventListener("pointercancel", stopTalk);
+const tryBox = $("#try");
+addEventListener("keydown", (e) => { if (e.code === "Space" && !e.repeat && tryBox.matches(":hover, :focus-within") ) { e.preventDefault(); startTalk(); } });
+addEventListener("keyup", (e) => { if (e.code === "Space" && live) { e.preventDefault(); stopTalk(); } });
+
+/* ---------- Bento demos ---------- */
+const TONES = ["hey can u send me the report asap, need it for the meeting", "Hi, could you send me the report today? I need it for the meeting.", "Dear Hamza, could you please share the report today? It is needed for the meeting.", "Please send the report today."];
+const TRANS = [["ur", "کل میٹنگ تین بجے ہے، پریزنٹیشن تیار کر لینا۔"], ["en", "The meeting is tomorrow at 3. Please have the presentation ready."], ["en", "kal shaam 6 baje call karte hain"], ["ur", "کل شام 6 بجے کال کرتے ہیں"]];
+let k = 0;
+function cycle() {
+  const tones = [...$("#tones").children], tt = $("#tonetext"), tr = $("#trans"), i = k % 4, [lang, text] = TRANS[k % 4];
+  tt.classList.add("out"); tr.classList.add("out");
+  setTimeout(() => {
+    tones.forEach((t, j) => t.classList.toggle("on", j === i));
+    tt.textContent = TONES[i]; tt.classList.remove("out");
+    tr.textContent = text; tr.className = "swap" + (lang === "ur" ? " ur" : "");
+  }, 350);
+  k++;
+}
+cycle(); setInterval(cycle, 2600);
+document.querySelectorAll(".cell").forEach((c) => c.addEventListener("pointermove", (e) => {
+  const r = c.getBoundingClientRect();
+  c.style.setProperty("--x", e.clientX - r.left + "px"); c.style.setProperty("--y", e.clientY - r.top + "px");
+}));
+
+/* ---------- Calculator ---------- */
+const range = $("#msgs");
+let shown = 0;
+// 30 words a message; typing at 40 wpm vs speaking at 150 wpm; 250 workdays of 8 hours.
+const hoursFor = (n) => (n * 30 * (1 / 40 - 1 / 150) * 250) / 60;
+function calc() {
+  const target = Math.round(hoursFor(+range.value)), from = shown;
+  $("#msgsval").textContent = range.value;
+  $("#days").textContent = `${Math.round(target / 8)} workdays`;
+  const t0 = performance.now();
+  const step = (now) => {
+    const p = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - p, 3);
+    shown = Math.round(from + (target - from) * e);
+    $("#hours").textContent = shown;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+range.addEventListener("input", calc);
+console.assert(Math.round(hoursFor(40)) === 92, "calc");
+
+/* ---------- Film ---------- */
+const vid = $("#filmvid");
+$("#play").onclick = () => { $("#filmbox").classList.add("playing"); vid.play(); };
+vid.addEventListener("play", () => $("#filmbox").classList.add("playing"));
+
+/* ---------- Copy ---------- */
+$("#copy").addEventListener("click", async (e) => {
+  try { await navigator.clipboard.writeText($("#cmd").textContent); e.target.textContent = "Copied ✓"; }
+  catch { getSelection().selectAllChildren($("#cmd")); e.target.textContent = "Press ⌘C"; }
   setTimeout(() => (e.target.textContent = "Copy"), 2000);
 });
 
-const film = document.getElementById("film"), sound = document.getElementById("sound");
-sound.addEventListener("click", () => {
-  film.muted = !film.muted;
-  if (!film.muted) { film.currentTime = 0; film.play(); }
-  sound.textContent = film.muted ? "🔊 Watch with sound" : "🔇 Mute";
-});
+/* ---------- Scroll motion ---------- */
+document.querySelectorAll(".split").forEach((p) => (p.innerHTML = p.textContent.split(" ").map((w) => `<span class="w">${w}</span>`).join(" ")));
+if (window.gsap && !reduce) {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from(".hero h1 .line > span", { yPercent: 110, duration: 1.1, ease: "expo.out", stagger: 0.12 });
+  gsap.from([".chip", ".hero .lede", ".hero .cta", ".needs"], { y: 24, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.08, delay: 0.35 });
+  gsap.from(".stage", { y: 80, opacity: 0, duration: 1.4, ease: "expo.out", delay: 0.6 });
+  gsap.to(".win", { scrollTrigger: { trigger: ".stage", start: "top 80%", end: "bottom 30%", scrub: true }, rotateX: 0, scale: 1.04 });
 
-const seen = new IntersectionObserver((entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), seen.unobserve(e.target))), { threshold: 0.15 });
-document.querySelectorAll(".reveal").forEach((el) => seen.observe(el));
+  gsap.to(".story .w", { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: ".story", start: "top 70%", end: "bottom 60%", scrub: true } });
+
+  document.querySelectorAll(".reveal").forEach((el) =>
+    gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
+
+  const track = $("#track");
+  gsap.to(track, {
+    x: () => -(track.scrollWidth - innerWidth), ease: "none",
+    scrollTrigger: { trigger: ".reel", pin: ".reel .pin", start: "top top", end: () => "+=" + (track.scrollWidth - innerWidth), scrub: 0.6, invalidateOnRefresh: true },
+  });
+  gsap.from(".app .mock", { rotateY: -18, ease: "none", scrollTrigger: { trigger: ".reel", start: "top top", end: () => "+=" + (track.scrollWidth - innerWidth), scrub: true } });
+
+  ScrollTrigger.create({ trigger: "#time", start: "top 70%", once: true, onEnter: calc });
+  gsap.from(".final h2", { scale: 0.7, opacity: 0, ease: "none", scrollTrigger: { trigger: ".final", start: "top 90%", end: "top 30%", scrub: true } });
+
+  // Download buttons lean toward the cursor.
+  document.querySelectorAll(".magnet").forEach((b) => {
+    b.addEventListener("pointermove", (e) => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.4 }); });
+    b.addEventListener("pointerleave", () => gsap.to(b, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" }));
+  });
+} else {
+  document.querySelectorAll(".reveal").forEach((el) => (el.style.cssText = "opacity:1;transform:none"));
+  $(".reel .pin").style.height = "auto";
+  $(".reel .pin").style.overflowX = "auto";
+  calc();
+}
 </script>
 </body>
 </html>
