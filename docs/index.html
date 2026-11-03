@@ -14,54 +14,13 @@
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Nastaliq+Urdu:wght@500&display=swap">
+<link rel="stylesheet" href="site.css">
 <style>
-/* A dark, cinematic page in the film's colors. The page itself demonstrates the app: messy speech in, clean text out. */
-:root {
-  --bg: #050507; --bg2: #0b0c16; --surface: rgba(255,255,255,0.04); --surface2: rgba(255,255,255,0.07);
-  --fg: #f2f2f5; --muted: #9a9cb3; --dim: #5d6078; --line: rgba(255,255,255,0.09);
-  --accent: #8a8eff; --accent2: #c38bff; --red: #ff4d4d; --green: #30d158;
-  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body: "Figtree", -apple-system, system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-  --urdu: "Noto Nastaliq Urdu", "Geeza Pro", serif;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: clip; }
-a { color: var(--accent); }
-button { font: inherit; }
-a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
-h1, h2, h3 { font-family: var(--display); line-height: 1.02; margin: 0; text-wrap: balance; }
-p { margin: 0; }
-kbd { font: 500 0.8em var(--mono); background: var(--surface2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 7px; color: var(--fg); }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
-.eyebrow { font: 600 0.75rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
-.grad { background: linear-gradient(100deg, var(--accent) 10%, var(--accent2) 50%, #ffffff 60%, var(--accent) 90%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
-@keyframes shine { to { background-position: -250% 0; } }
+/* The landing page demonstrates the app: messy speech in, clean text out. Shared styles live in site.css. */
 section { position: relative; padding-block: 120px; }
 .head { display: grid; gap: 16px; justify-items: center; text-align: center; margin-bottom: 56px; }
 .head h2 { font-size: clamp(2.2rem, 6vw, 4.2rem); letter-spacing: -0.035em; font-weight: 800; }
 .head p { color: var(--muted); max-width: 54ch; font-size: 1.1rem; }
-
-/* Grain over everything, like the film. */
-body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.06; mix-blend-mode: screen;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-.btn { position: relative; appearance: none; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1rem var(--body); border-radius: 14px; padding: 15px 26px; color: #0a0a14; background: linear-gradient(135deg, #a9acff, var(--accent) 50%, #7a6cff); box-shadow: 0 0 0 1px rgba(255,255,255,0.15) inset, 0 12px 40px -8px rgba(138,142,255,0.6); transition: box-shadow .3s; will-change: transform; }
-.btn:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.25) inset, 0 18px 60px -6px rgba(138,142,255,0.85); }
-.btn svg { width: 18px; height: 18px; flex: none; }
-.btn.ghost { color: var(--fg); background: var(--surface); box-shadow: 0 0 0 1px var(--line) inset; backdrop-filter: blur(10px); }
-
-/* Nav */
-nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
-nav.solid { background: rgba(5,5,7,0.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); border-color: var(--line); }
-nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
-.brand { display: flex; align-items: center; gap: 10px; font: 700 1.2rem var(--display); color: var(--fg); text-decoration: none; }
-.brand img { width: 30px; height: 30px; }
-nav .links { display: flex; gap: 26px; margin-left: auto; }
-nav .links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color .2s; }
-nav .links a:hover { color: var(--fg); }
-nav .btn { padding: 9px 18px; font-size: 0.9rem; border-radius: 11px; }
 
 /* Hero */
 .hero { min-height: 100svh; padding-block: 130px 80px; display: grid; align-items: center; overflow: hidden; }
@@ -173,12 +132,6 @@ nav .btn { padding: 9px 18px; font-size: 0.9rem; border-radius: 11px; }
 .app { width: min(560px, 82vw); flex: none; display: grid; gap: 14px; }
 .said { font: 500 0.82rem var(--mono); color: var(--muted); padding-left: 14px; border-left: 2px solid var(--accent); }
 .said b { color: var(--accent); font-weight: 500; }
-.mock { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #11121c; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9); }
-.mock.light { background: #fbfbfd; color: #1d1d1f; }
-.mock .bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; border-bottom: 1px solid rgba(128,128,128,0.18); font-size: 0.78rem; color: #8b8b95; }
-.mock .bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
-.mock .bar i:nth-child(2) { background: #febc2e; } .mock .bar i:nth-child(3) { background: #28c840; }
-.mock .bar span { margin-left: 10px; }
 .mock .in { padding: 20px; display: grid; gap: 12px; min-height: 230px; align-content: start; font-size: 0.98rem; }
 .mock .meta { font-size: 0.82rem; color: #8b8b95; border-bottom: 1px solid rgba(128,128,128,0.15); padding-bottom: 8px; }
 .mock .term { font: 0.92rem/1.7 var(--mono); color: #e6e8f5; }
@@ -235,26 +188,11 @@ nav .btn { padding: 9px 18px; font-size: 0.9rem; border-radius: 11px; }
 .film.playing .play { opacity: 0; pointer-events: none; }
 
 /* FAQ */
-.faq { max-width: 780px; margin: 0 auto; display: grid; gap: 10px; }
-details { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 4px 22px; transition: background .3s; }
-details[open] { background: var(--surface2); }
-summary { cursor: pointer; font-weight: 600; font-size: 1.05rem; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
-summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; color: var(--accent); font-size: 1.4rem; line-height: 1; transition: transform .3s; }
-details[open] summary::after { transform: rotate(45deg); }
-details p { color: var(--muted); padding-bottom: 18px; }
 
 /* Final */
 .final { text-align: center; padding-block: 140px 100px; overflow: hidden; }
 .final h2 { font-size: clamp(3.4rem, 14vw, 11rem); letter-spacing: -0.06em; font-weight: 800; line-height: 0.9; }
 .final .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 44px; }
-.term-line { display: flex; align-items: center; gap: 10px; max-width: 640px; margin: 22px auto 0; border-radius: 14px; border: 1px solid var(--line); background: rgba(0,0,0,0.4); padding: 6px 6px 6px 16px; font: 0.8rem var(--mono); text-align: left; }
-.term-line code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; color: #cfd0e0; }
-.term-line code::before { content: "$ "; color: var(--dim); }
-.term-line button { appearance: none; border: 0; cursor: pointer; background: var(--surface2); color: var(--fg); border-radius: 10px; padding: 8px 14px; font: 600 0.8rem var(--body); }
-footer { border-top: 1px solid var(--line); padding-block: 30px 44px; color: var(--dim); font-size: 0.88rem; }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
-footer a { color: var(--muted); }
 
 .reveal { opacity: 0; transform: translateY(40px); }
 
@@ -264,8 +202,6 @@ footer a { color: var(--muted); }
   .cell, .cell.wide { grid-column: span 1; }
 }
 @media (max-width: 640px) {
-  nav .links { display: none; }
-  nav .btn { margin-left: auto; }
   section { padding-block: 80px; }
   .story { padding-block: 100px; }
   .bento { grid-template-columns: 1fr; }
@@ -294,7 +230,7 @@ footer a { color: var(--muted); }
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="gridlines" aria-hidden="true"></div>
   <div class="wrap">
-    <a class="chip" href="#film"><b>New</b><span id="ver">Free for Mac</span> · Watch the film →</a>
+    <a class="chip" href="#film"><b>New</b><span data-version="Reword {v} is out">Free for Mac</span> · Watch the film →</a>
     <h1><span class="line"><span>Speak <span class="messy">messy.</span></span></span><span class="line"><span>Send <span class="grad">perfect.</span></span></span></h1>
     <p class="lede">Hold <kbd>fn</kbd> and just talk, in English, Urdu or both at once. Reword types what you <em>meant</em>, cleaned up, in any app on your Mac.</p>
     <div class="cta">
@@ -490,7 +426,7 @@ footer a { color: var(--muted); }
       <a class="btn dl magnet" href="https://github.com/noorxhk/reword-releases/releases/latest">Download for Mac</a>
       <a class="btn ghost" href="install.html">Install guide</a>
     </div>
-    <div class="term-line reveal"><code id="cmd">curl -fsSL https://raw.githubusercontent.com/noorxhk/reword-releases/main/install.sh | bash</code><button id="copy" type="button">Copy</button></div>
+    <div class="term-line reveal"><code id="cmd">curl -fsSL https://raw.githubusercontent.com/noorxhk/reword-releases/main/install.sh | bash</code><button data-copy="#cmd" type="button">Copy</button></div>
   </div>
 </section>
 
@@ -501,25 +437,13 @@ footer a { color: var(--muted); }
   </div>
 </footer>
 
+<script src="site.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 const $ = (s) => document.querySelector(s);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Download buttons get the latest DMG straight from GitHub; without the API they keep the releases page.
-fetch("https://api.github.com/repos/noorxhk/reword-releases/releases/latest")
-  .then((r) => r.json())
-  .then((rel) => {
-    const dmg = rel.assets.find((a) => a.name.endsWith(".dmg"));
-    if (!dmg) return;
-    document.querySelectorAll("a.dl").forEach((a) => (a.href = dmg.browser_download_url));
-    $("#ver").textContent = `Reword ${rel.tag_name.replace(/^v/, "")} is out`;
-  })
-  .catch(() => {});
-
-addEventListener("scroll", () => $("#nav").classList.toggle("solid", scrollY > 20), { passive: true });
 
 /* ---------- Hero: messy speech in, clean text out ---------- */
 // Each word: [text, tag?]. A tag marks words Reword removes; the label shows on the first word of a run.
@@ -707,13 +631,6 @@ console.assert(Math.round(hoursFor(40)) === 92, "calc");
 const vid = $("#filmvid");
 $("#play").onclick = () => { $("#filmbox").classList.add("playing"); vid.play(); };
 vid.addEventListener("play", () => $("#filmbox").classList.add("playing"));
-
-/* ---------- Copy ---------- */
-$("#copy").addEventListener("click", async (e) => {
-  try { await navigator.clipboard.writeText($("#cmd").textContent); e.target.textContent = "Copied ✓"; }
-  catch { getSelection().selectAllChildren($("#cmd")); e.target.textContent = "Press ⌘C"; }
-  setTimeout(() => (e.target.textContent = "Copy"), 2000);
-});
 
 /* ---------- Scroll motion ---------- */
 document.querySelectorAll(".split").forEach((p) => (p.innerHTML = p.textContent.split(" ").map((w) => `<span class="w">${w}</span>`).join(" ")));
